@@ -3,7 +3,11 @@ session_start();
 
 error_reporting(0);
 
-$varsesion = $_SESSION['usuario'];
+$var_cliente = $_SESSION['usuario'];
+$var_tel     = $_SESSION['tel'];
+$var_email   = $_SESSION['email'];
+$var_admin = $_SESSION['gerente'];
+
 ?>
 
 
@@ -34,9 +38,11 @@ $varsesion = $_SESSION['usuario'];
                 <button class="btn btn-outline-secondary" type="button" onclick="location.href='datos_cliente.php'">Datos del cliente</button>
                 <button class="btn btn-outline-secondary" type="button" disabled>Contacto</button>
                 <?php 
-                
-                if($varsesion !== null || $varsesion != ''){
-                echo "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"location.href='models/cerrar_sesion.php'\">Cerrar sesión</button>";
+                if($var_admin !== null || $var_admin != ''){
+                    echo "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"location.href='administracion.php'\">Mensajes</button>";
+                }
+                if($var_cliente !== null || $var_cliente != ''){
+                echo "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"location.href='../models/cerrar_sesion.php'\">Cerrar sesión</button>";
                 }
                 
                 ?>
@@ -51,26 +57,45 @@ $varsesion = $_SESSION['usuario'];
 
 
     <div class="container">
-        <form>
+        <form method="POST" action="http://localhost/hotel_sureste/models/enviar_duda.php">
             <div class="row">
                 <h4 class="text-center">Realiza una pregunta</h4>
                 <h6 class="text-start">Ingresa tus datos primero</h6>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Nombre del cliente</label>
-                        <input type="text" class="form-control" placeholder="Nombre completo">
+                        <?php
+                         if($var_cliente != null | $var_cliente != ''){
+                            echo "<input type=\"text\" name=\"cliente\" class=\"form-control\" placeholder=\"Nombre completo\" value=\"$var_cliente\">";
+                         }else{
+                            echo "<input type=\"text\" name=\"cliente\" class=\"form-control\" placeholder=\"Nombre completo\">";
+                         }
+                        ?>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Telefono</label>
-                        <input type="text" class="form-control" placeholder="10 digitos">
+                        <?php
+                        if($var_tel != null | $var_tel != ''){
+                            echo "<input type=\"text\" name=\"tel\" class=\"form-control\" placeholder=\"10 digitos\" value=\"$var_tel\">";
+                            
+                        }else{
+                            echo "<input type=\"text\" name=\"tel\" class=\"form-control\" placeholder=\"10 digitos\">";
+                         }
+                        ?>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Correo electronico</label>
-                        <input type="email" class="form-control" placeholder="ejemplo@gmail.com">
+                        <?php
+                        if($var_email != null | $var_email != ''){
+                            echo "<input type=\"email\" name=\"email\" class=\"form-control\" placeholder=\"ejemplo@gmail.com\" value=\"$var_email\">";
+                        }else{
+                            echo "<input type=\"email\" name=\"email\" class=\"form-control\" placeholder=\"ejemplo@gmail.com\">";
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -78,7 +103,7 @@ $varsesion = $_SESSION['usuario'];
             <div class="row">
                 <div class="col">
                     <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px"></textarea>
+                        <textarea class="form-control" name="duda" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px"></textarea>
                         <label for="floatingTextarea2">Duda</label>
                     </div>
                 </div>

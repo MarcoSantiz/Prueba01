@@ -3,22 +3,17 @@
 session_start();
 error_reporting(0);
 
-$var_cliente = $_SESSION['usuario'];
+
 $var_admin = $_SESSION['gerente'];
 
-if($var_cliente != null | $var_cliente != ''){
-    header("Location:datos_cliente.php");    
+if($var_admin == null || $var_admin == ''){
+    header("Location:login.php");
 }
 
-if($var_admin != null | $var_admin != ''){
-    header("Location:administracion.php");    
-}
 
 ?>
 
 <!DOCTYPE html>
-
-
 <html lang="en">
 
 <head>
@@ -31,7 +26,7 @@ if($var_admin != null | $var_admin != ''){
     <title>Hotel Sureste</title>
 </head>
 
-<body>
+<body class="">
 
     <!-- Barra de navegación -->
     <nav class="navbar navbar-dark bg-dark">
@@ -44,6 +39,15 @@ if($var_admin != null | $var_admin != ''){
                 <button class="btn btn-outline-secondary" type="button" onclick="location.href='reservaciones.php'">Reservaciones</button>
                 <button class="btn btn-outline-secondary" type="button" onclick="location.href='datos_cliente.php'">Datos del cliente</button>
                 <button class="btn btn-outline-secondary" type="button" onclick="location.href='contacto.php'">Contacto</button>
+                <?php 
+                
+                if($var_admin !== null || $var_admin != ''){
+                    echo "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"location.href='administracion.php'\" disabled>Mensajes</button>";
+                    echo "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"location.href='../models/cerrar_sesion.php'\">Cerrar sesión</button>";
+                }
+                
+                ?>
+
 
             </form>
         </div>
@@ -52,41 +56,31 @@ if($var_admin != null | $var_admin != ''){
 
 
 
-    <!-- Contenido de la página -->
+
     <div class="container">
-        <br><br>
+    <h4 class="text-center">Mensajes de los clientes</h4>
         <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <div class="card">
-                    <form method="POST" action="http://localhost/hotel_sureste/models/sesion_login.php">
-                        <h5 class="card-header">Ingrese sus datos de acceso</h5>
-                        <div class="card-body">
-                            <div class="container">
-                                <br>
-                                <div class="form-group">
-                                    <label>Correo electronico</label>
-                                    <input type="email" name="email" class="form-control" placeholder="ejemplo@gmail.com">
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <label>Contraseña</label>
-                                    <input type="password" name="pass" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer text-muted">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-3 offset-md-4">
-                                        <input type="submit" value="Ingresar" class="btn btn-primary">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+            <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Mensaje</th>
+                    <th scope="col">Opcion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <!-- Aqui se incrustan todos los mensajes -->
+                        <?php
+                            include '../models/consultar_mensajes.php';
+                            echo $mensajes;
+                        ?>
+                </tbody>
+        </table>
             </div>
         </div>
+        
 
     </div>
 
@@ -139,8 +133,6 @@ if($var_admin != null | $var_admin != ''){
             </div>
         </div>
     </footer>
-
-
 
 </body>
 <link rel="stylesheet" href="../librerias/estilos/estilos.css">

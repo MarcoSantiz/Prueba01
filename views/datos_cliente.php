@@ -1,9 +1,16 @@
 <?php
 session_start();
 
-error_reporting(0);
+// error_reporting(0);
 
-$varsesion = $_SESSION['usuario'];
+$var_cliente = $_SESSION['usuario'];
+$var_admin = $_SESSION['gerente'];
+
+
+if($var_cliente == null || $var_cliente == ''){
+    header("Location:login.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +22,9 @@ $varsesion = $_SESSION['usuario'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../librerias/bootstrap-5.1.1-dist/css/bootstrap.min.css">
     <script src="../librerias/bootstrap-5.1.1-dist/js/bootstrap.min.js"></script>
+    <script src="../librerias/jquery-3.6.0.min.js"></script>
+    <script src="../controllers/control.js"></script>
+    
 
     <title>Hotel Sureste</title>
 </head>
@@ -33,9 +43,11 @@ $varsesion = $_SESSION['usuario'];
                 <button class="btn btn-outline-secondary" type="button" disabled>Datos del cliente</button>
                 <button class="btn btn-outline-secondary" type="button" onclick="location.href='contacto.php'">Contacto</button>
                 <?php 
-                
-                if($varsesion !== null || $varsesion != ''){
-                echo "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"location.href='models/cerrar_sesion.php'\">Cerrar sesión</button>";
+                if($var_admin !== null || $var_admin != ''){
+                    echo "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"location.href='administracion.php'\">Mensajes</button>";
+                }
+                if($var_cliente !== null || $var_cliente != ''){
+                echo "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"location.href='../models/cerrar_sesion.php'\">Cerrar sesión</button>";
                 }
                 
                 ?>
@@ -54,28 +66,12 @@ $varsesion = $_SESSION['usuario'];
             <h4 class="text-center">Información habitacional</h4>
             <br><br>
             <div class="col-md-5">
-                <table class="table">
+                <!-- Aqui se incrusta las tablas dinamicamente -->
+                <?php
 
-                    <tbody>
-                        <tr>
-
-                            <td>Fecha de instancia</td>
-                            <td id="fecha">28/09/2021</td>
-
-                        </tr>
-                        <tr>
-
-                            <td>Tipo de habitación</td>
-                            <td id="tipo_habit">Suite</td>
-
-                        </tr>
-                        <tr>
-
-                            <td>Personas que se alojan</td>
-                            <td id="Personas">5</td>
-                        </tr>
-                    </tbody>
-                </table>
+                include '../models/consultar_datos.php';
+                echo $dato_habit;
+                ?>
             </div>
         </div>
 
@@ -85,41 +81,15 @@ $varsesion = $_SESSION['usuario'];
             <h4 class="text-center">Información personal</h4>
             <br><br>
             <div class="col-md-5">
-                <table class="table">
+                <!-- Aqui se incrusta una tabla -->
+                <?php
 
-                    <tbody>
-                        <tr>
+                echo $dato_person;
 
-                            <td>Nombre del cliente</td>
-                            <td id="nombre"><?php echo $_SESSION['usuario'] ?></td>
-
-                        </tr>
-                        <tr>
-
-                            <td>Correo</td>
-                            <td id="correo">chuzzgomez18@gmail.com</td>
-
-                        </tr>
-                        <tr>
-
-                            <td>Teléfono</td>
-                            <td id="telefono">9191178737</td>
-                        </tr>
-                        <tr>
-
-                            <td>Tarjeta bancaria</td>
-                            <td id="tarjeta">*************0421</td>
-                        </tr>
-                    </tbody>
-                </table>
+                ?>
             </div>
         </div>
         <br>
-        <div class="row">
-            <div class="col">
-                <button type="button" class="btn btn-danger" id="fin_reservacion">Terminar reservación</button>
-            </div>
-        </div>
         <br>
     </div>
 

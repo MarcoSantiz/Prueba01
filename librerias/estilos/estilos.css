@@ -4,12 +4,39 @@
     background-size: 100%;
 }
 
-.banner1 {
-    margin-top: 10px;
+.div_img {
     width: 100%;
-    height: auto;
+    height: 80%;
+}
+
+.img_banner1 {
+    width: 700px;
+    height: 400px;
+    position: relative;
+    background-image: url("../../imagenes/hotel_4.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.img_banner2 {
+    width: 644px;
+    height: 400px;
+    position: relative;
+    background-image: url("../../imagenes/hotel_6.jpg");
+    background-repeat: no-repeat;
+    margin-top: -400px;
+    margin-left: 705px;
 }
 
 .footer {
     margin-top: 5px;
+    height: auto;
+}
+
+.login {
+    position: absolute;
+    float: right;
+    z-index: 99;
+    margin-top: -250px;
+    margin-left: 80%;
 }

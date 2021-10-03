@@ -2,6 +2,8 @@
 session_start();
 error_reporting(0);
 $varsesion = $_SESSION['usuario'];
+$var_admin = $_SESSION['gerente'];
+
 
 ?>
 
@@ -33,6 +35,10 @@ $varsesion = $_SESSION['usuario'];
                 <button class="btn btn-outline-secondary" type="button" onclick="location.href='views/datos_cliente.php'">Datos del cliente</button>
                 <button class="btn btn-outline-secondary" type="button" onclick="location.href='views/contacto.php'">Contacto</button>
                 <?php 
+
+                if($var_admin !== null || $var_admin != ''){
+                    echo "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"location.href='views/administracion.php'\">Mensajes</button>";
+                }
                 
                 if($varsesion !== null || $varsesion != ''){
                 echo "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"location.href='models/cerrar_sesion.php'\">Cerrar sesión</button>";
@@ -44,18 +50,19 @@ $varsesion = $_SESSION['usuario'];
         </div>
 
     </nav>
+    <div class="div_img">
+        <div class="img_banner1">
+        </div>
+        <div class="img_banner2">
+        </div>
+        <input type="button" value="Login" class="btn btn-primary btn-lg login" id="btn_login" onclick="show_login()">
 
-
+    </div>
+    
 
     <!-- Contenido de la página -->
     <div class="container">
-        <br><br>
-        <div class="row">
-            <div class="col">
-                <input type="button" value="Login" class="btn btn-primary btn-lg" id="btn_login" onclick="show_login()">
-            </div>
-        </div>
-
+     
     </div>
 
     <!-- Aqui comienza el Footer -->
