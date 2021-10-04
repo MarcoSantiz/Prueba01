@@ -67,7 +67,6 @@ if($var_admin == null || $var_admin == ''){
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Mensaje</th>
-                    <th scope="col">Opcion</th>
                     </tr>
                 </thead>
                 <tbody>

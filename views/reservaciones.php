@@ -207,36 +207,60 @@ $var_admin = $_SESSION['gerente'];
             <h6 class="text-center">Tarjeta de crédito o débito</h6>
             <br>
             <div class="row">
+
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Número de tarjeta</label>
-                        <input type="text" name="tarjeta" class="form-control" placeholder="16 digitos" required>
+                        <input type="text" name="tarjeta" class="form-control" placeholder="16 digitos" id="input_tarjeta" required>
                     </div>
                 </div>
 
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Fecha de vencimiento</label>
-                        <input type="text" name="fecha_vence" class="form-control" placeholder="MM/AA" required>
+                        <input type="text" name="fecha_vence" class="form-control" placeholder="MM/AA" id="input_fecha" required>
                     </div>
                 </div>
 
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Código de seguridad</label>
-                        <input type="number" name="codigo" class="form-control" placeholder="123" required>
+                        <input type="number" name="codigo" class="form-control" placeholder="123" id="input_codigo" required>
                     </div>
                 </div>
 
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Código postal</label>
-                        <input type="number" name="postal" class="form-control" placeholder="29950" required>
+                        <input type="number" name="postal" class="form-control" placeholder="29950" id="input_postal" required>
                     </div>
                 </div>
+                
             </div>
             <br><br>
+            <div class="row">
 
+                    <?php
+
+                    if($var_cliente != null | $var_cliente != ''){
+
+                        echo "
+                        <h6 class=\"text-center\">Pegue su clave privada para descifrar sus datos</h6>
+                        <div class=\"col-md-2\">
+                        <textarea type=\"text\" class=\"from-control\" id=\"llave_priv\" onchange=\"read_llave(this)\"></textarea>
+                        </div>
+                        <div class=\"col-md-2 offset-md-2\">
+                        <button class=\"btn btn-primary\" type=\"button\" id=\"btn_descifrar\" data-cliente=\"".$var_cliente."\" onclick=\" descifrar()\" >Ver</button>                
+                        </div>";
+                    }
+                    ?>
+                
+                    
+                
+            </div>
+            <br><br>
+            <h6 class="text-start text-danger">Guarde su clave privada para ver sus datos bancarios</h6>
+            <br>
             <!-- Boton de hacer reservación -->
             <div class="row">
                 <div class="col">

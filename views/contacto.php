@@ -171,4 +171,5 @@ $var_admin = $_SESSION['gerente'];
 </body>
 <link rel="stylesheet" href="../librerias/estilos/estilos.css">
 
+<script src="../controllers/crear_token.js"></script>
 </html>

@@ -65,3 +65,34 @@ function fin_reservacion() {
         },
     });
 }
+
+var llave_privada = "";
+
+function read_llave(este) {
+    llave_privada = $(este).val();
+}
+
+function descifrar() {
+    $('#llave_priv').val('');
+    var cliente = $('#btn_descifrar').data('cliente');
+
+    $.ajax({
+        url: 'http://localhost/hotel_sureste/models/mostrar_datos_bancarios.php',
+        data: { cliente: cliente, llave_privada: llave_privada },
+        type: 'POST',
+        dataType: 'json',
+        success: function(data) {
+            console.log(data);
+
+            $('#input_tarjeta').val(data.tarjeta);
+            $('#input_fecha').val(data.fecha);
+            $('#input_codigo').val(data.codigo);
+            $('#input_postal').val(data.postal);
+
+        },
+        error: function(xhr, status) {
+            console.log('Error: ' + xhr.status);
+        },
+    });
+
+}
