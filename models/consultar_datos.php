@@ -17,7 +17,7 @@ if($var_cliente != null || $var_cliente != ''){
     }else{
     
 
-        $consulta = "SELECT fecha_estancia, tipo, personas  FROM clientes INNER JOIN habitaciones ON clientes.id_habitacion = habitaciones.id_habitacion WHERE cliente = '$var_cliente'";
+        $consulta = "SELECT fecha_estancia, tipo, personas  FROM reservaciones INNER JOIN habitaciones ON reservaciones.id_habitacion = habitaciones.id_habitacion WHERE cliente = '$var_cliente'";
 
         $consulta_ejec= mysqli_query($enlace, $consulta);
 
@@ -57,7 +57,7 @@ if($var_cliente != null || $var_cliente != ''){
             $dato_habit = "<h6 class=\"text-center\">Ningúna habitación reservada</h6>";
         }
 
-        $consulta_2 = "SELECT email, tel, num_tarjeta  FROM clientes INNER JOIN tarjetas ON clientes.id_cliente = tarjetas.id_cliente WHERE cliente = '$var_cliente' LIMIT 1;";
+        $consulta_2 = "SELECT email, tel, num_tarjeta  FROM reservaciones INNER JOIN tarjetas ON reservaciones.id_cliente = tarjetas.id_cliente WHERE cliente = '$var_cliente' LIMIT 1;";
         $consulta_ejec_2= mysqli_query($enlace, $consulta_2);
         $num_rows_2 = mysqli_num_rows($consulta_ejec_2);
 

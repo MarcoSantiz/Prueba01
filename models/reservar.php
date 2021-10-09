@@ -53,7 +53,7 @@ if(!$enlace){
 
     // Se extrae la llave publica unicamente
     $pubKey = $pubKey["key"];
-    // $pubKey_encode = base64_encode($pubKey);
+
 
     // Encripta el numero de la tarjeta, la fecha de vencimiento y el código
     openssl_public_encrypt($tarjeta, $tarjeta_encript, $pubKey);

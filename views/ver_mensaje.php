@@ -1,14 +1,24 @@
 <?php
-session_start();
 
+session_start();
 error_reporting(0);
 
-$var_cliente = $_SESSION['usuario'];
-$var_tel     = $_SESSION['tel'];
+
 $var_admin = $_SESSION['gerente'];
 
-?>
+if($var_admin == null || $var_admin == ''){
+    header("Location:login.php");
+}
 
+$id_mensaje = 0;
+
+if(isset($_GET["id"])){
+    $id_mensaje = $_GET["id"];
+
+}
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +29,8 @@ $var_admin = $_SESSION['gerente'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../librerias/bootstrap-5.1.1-dist/css/bootstrap.min.css">
     <script src="../librerias/bootstrap-5.1.1-dist/js/bootstrap.min.js"></script>
+    <script src="../librerias/jquery-3.6.0.min.js"></script>
+    <script src="../controllers/control.js"></script>
 
     <title>Hotel Sureste</title>
 </head>
@@ -35,13 +47,12 @@ $var_admin = $_SESSION['gerente'];
                 </a>
                 <button class="btn btn-outline-secondary" type="button" onclick="location.href='reservaciones.php'">Reservaciones</button>
                 <button class="btn btn-outline-secondary" type="button" onclick="location.href='datos_cliente.php'">Datos del cliente</button>
-                <button class="btn btn-outline-secondary" type="button" disabled>Contacto</button>
+                <button class="btn btn-outline-secondary" type="button" onclick="location.href='contacto.php'">Contacto</button>
                 <?php 
+                
                 if($var_admin !== null || $var_admin != ''){
                     echo "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"location.href='administracion.php'\">Mensajes</button>";
-                }
-                if($var_cliente !== null || $var_cliente != ''){
-                echo "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"location.href='../models/cerrar_sesion.php'\">Cerrar sesión</button>";
+                    echo "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"location.href='../models/cerrar_sesion.php'\">Cerrar sesión</button>";
                 }
                 
                 ?>
@@ -56,63 +67,65 @@ $var_admin = $_SESSION['gerente'];
 
 
     <div class="container">
-        <form method="POST" action="http://localhost/hotel_sureste/models/enviar_duda.php">
-            <div class="row">
-                <h4 class="text-center">Realiza una pregunta</h4>
-                <?php
-                if(isset($_GET["enviado"]) && $_GET["enviado"] == 'true'){
-                echo "<h4 class=\"text-success text-center\">¡Enviado correctamente!</h4>";
-                }
-                ?>
-                <h6 class="text-start">Ingresa tus datos primero</h6>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Nombre del cliente</label>
-                        <?php
-                         if($var_cliente != null | $var_cliente != ''){
-                            echo "<input type=\"text\" name=\"usuario\" class=\"form-control\" placeholder=\"Nombre completo\" value=\"$var_cliente\" required>";
-                         }else{
-                            echo "<input type=\"text\" name=\"usuario\" class=\"form-control\" placeholder=\"Nombre completo\" required>";
-                         }
-                        ?>
-                    </div>
+        <h4 class="text-center">Mensajes del cliente</h4>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <textarea id="llave_privada" placeholder="Ingresa la llave privada" rows="15"></textarea>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Telefono</label>
-                        <?php
-                        if($var_tel != null | $var_tel != ''){
-                            echo "<input type=\"text\" name=\"tel\" class=\"form-control\" placeholder=\"10 digitos\" value=\"$var_tel\" required>";
+            </div>
+            <div class="col-md-6 offset-md-1">
+               
+                <div class="card">
+                    
+                        <h5 class="card-header">Encriptado</h5>
+                        <div class="card-body">
+                            <div class="container">
+
+                            <?php 
                             
-                        }else{
-                            echo "<input type=\"text\" name=\"tel\" class=\"form-control\" placeholder=\"10 digitos\" required>";
-                         }
-                        ?>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Correo electronico</label>
-                        <input type="email" name="email" class="form-control" placeholder="ejemplo@gmail.com" required>      
-                    </div>
-                </div>
-            </div>
-            <br><br>
-            <div class="row">
-                <div class="col">
-                    <div class="form-floating">
-                        <textarea class="form-control" name="duda" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px" required></textarea>
-                        <label for="floatingTextarea2">Duda</label>
-                    </div>
+                            include("../models/obtener_mensaje.php");
+
+                            echo "<div id=\"mensaje_encriptado\">".$mensaje."</div>";
+                            
+                            
+                            ?>
+                            </div>
+                                
+                            
+                        </div>
+                    
                 </div>
             </div>
-            <br><br>
-            <div class="row">
-                <div class="col">
-                    <input type="submit" value="Enviar pregunta" class="btn btn-primary" id="enviar_pregunta">
+        </div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+               
+                <div class="card">
+                    
+                        <h5 class="card-header">Desencriptado</h5>
+                        <div class="card-body">
+                            <div class="container">
+
+                            <div id="div_mensaje"></div>
+                                
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-4">
+                                        <?php
+                                        echo "<input type=\"button\" value=\"Desencriptar\" class=\"btn btn-primary\" onclick=\"descifrar_mens()\">";
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
                 </div>
             </div>
-        </form>
+        </div>
 
     </div>
 
@@ -168,4 +181,5 @@ $var_admin = $_SESSION['gerente'];
 
 </body>
 <link rel="stylesheet" href="../librerias/estilos/estilos.css">
+
 </html>

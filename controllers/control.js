@@ -2,6 +2,44 @@ function show_login() {
     window.location.href = "http://localhost/hotel_sureste/views/login.php";
 }
 
+
+function crear_llave_privada() {
+    window.location.href = "http://localhost/hotel_sureste/models/crear_llave_priv.php";
+}
+
+
+function show_mensaje(este) {
+    var id_mensaje = $(este).data('id_mens');
+    window.location.href = 'http://localhost/hotel_sureste/views/ver_mensaje.php?id=' + id_mensaje;
+}
+
+function descifrar_mens(mensaje) {
+    var llave_privada = $('#llave_privada').val();
+    var mensaje = $('#mensaje_encriptado').text();
+
+    $.ajax({
+        url: 'http://localhost/hotel_sureste/models/descifrar_mensaje.php',
+        data: { mensaje: mensaje, llave_privada: llave_privada },
+        type: 'POST',
+        dataType: 'text',
+        success: function(data) {
+
+            $('#div_mensaje').text(data);
+
+        },
+        error: function(xhr, status) {
+            console.log('Error: ' + xhr.status);
+        },
+    });
+
+}
+
+
+function show_registrar() {
+    window.location.href = "http://localhost/hotel_sureste/views/registrar.php";
+
+}
+
 // Cambia el numero de habitación
 function cambio_habit() {
     var tipo_habit = document.getElementById("tipo_habit").value;
@@ -33,6 +71,7 @@ function cambio_habit() {
 
 var estado_input = true;
 
+//muestra la contraseña
 function show_pass() {
     if (estado_input) {
         $('#input_pass').attr("type", "text");
@@ -45,7 +84,7 @@ function show_pass() {
     }
 }
 
-
+//Termina una reservación
 function fin_reservacion() {
     var btn_fin = $('#fin_reservacion');
     var tipo = btn_fin.data('tipo');
@@ -67,11 +106,12 @@ function fin_reservacion() {
 }
 
 var llave_privada = "";
-
+//Lee la llave privada
 function read_llave(este) {
     llave_privada = $(este).val();
 }
 
+// Descifra
 function descifrar() {
     $('#llave_priv').val('');
     var cliente = $('#btn_descifrar').data('cliente');
@@ -95,4 +135,50 @@ function descifrar() {
         },
     });
 
+}
+
+function validar_pass(este) {
+    var pass_nuevo = $('#input_pass_nuevo').val();
+    var pass_compr = $(este).val();
+    if (pass_nuevo.length < 6) {
+        $('#mensaje_pass').text("Contraseña muy corta");
+    } else {
+        $('#mensaje_pass').text("");
+
+        if (pass_nuevo != pass_compr) {
+            $('#mensaje_pass').text("Las contraseñas no son iguales");
+        } else {
+            $('#mensaje_pass').text("");
+        }
+    }
+}
+
+
+var estado_pass_nuevo = true;
+//muestra la contraseña en módulo registros
+function show_pass_nuevo() {
+    if (estado_pass_nuevo) {
+        $('#input_pass_nuevo').attr("type", "text");
+        estado_pass_nuevo = false;
+        $('#btn_show_nuevo').text('Ocultar');
+    } else {
+        $('#input_pass_nuevo').attr("type", "password");
+        estado_pass_nuevo = true;
+        $('#btn_show_nuevo').text('Ver');
+    }
+}
+
+
+var estado_pass_compr = true;
+//muestra la contraseña de comprobar en módulo registros
+function show_pass_compr() {
+    if (estado_pass_compr) {
+        $('#input_pass_compr').attr("type", "text");
+        estado_pass_compr = false;
+        $('#btn_show_compr').text('Ocultar');
+    } else {
+        $('#input_pass_compr').attr("type", "password");
+        estado_pass_compr = true;
+        $('#btn_show_compr').text('Ver');
+    }
 }

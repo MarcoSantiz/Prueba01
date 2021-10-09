@@ -22,6 +22,8 @@ if($var_admin == null || $var_admin == ''){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../librerias/bootstrap-5.1.1-dist/css/bootstrap.min.css">
     <script src="../librerias/bootstrap-5.1.1-dist/js/bootstrap.min.js"></script>
+    <script src="../librerias/jquery-3.6.0.min.js"></script>
+    <script src="../controllers/control.js"></script>
 
     <title>Hotel Sureste</title>
 </head>
@@ -59,6 +61,13 @@ if($var_admin == null || $var_admin == ''){
 
     <div class="container">
     <h4 class="text-center">Mensajes de los clientes</h4>
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-secondary" onclick="crear_llave_privada()">Crear llave privada</button>
+            <p class="text-danger">Guarde su llave privada para descifrar los mensajes</p>
+        </div>
+    </div>
+    <br>
         <div class="row">
             <div class="col">
             <table class="table">
@@ -66,7 +75,9 @@ if($var_admin == null || $var_admin == ''){
                     <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Mensaje</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Opción</th>
                     </tr>
                 </thead>
                 <tbody>

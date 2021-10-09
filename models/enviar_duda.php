@@ -1,6 +1,6 @@
 <?php
 
-$cliente    = $_POST['cliente'];
+$usuario    = $_POST['usuario'];
 $tel        = $_POST['tel'];
 $email      = $_POST['email'];
 $duda       = $_POST['duda'];
@@ -10,53 +10,40 @@ $enlace = mysqli_connect("localhost", "root", "", "hotel_sureste");
 
 if(!$enlace){
     echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
-    echo "errno de depuración: " . mysqli_connect_errno() . PHP_EOL;
-    echo "error de depuración: " . mysqli_connect_error() . PHP_EOL;
+    echo "Error de depuración: " . mysqli_connect_errno() . PHP_EOL;
+    echo "Error de depuración: " . mysqli_connect_error() . PHP_EOL;
     exit;
-}else{
+}else{ 
     
+    // Aqui todo el proceso de encriptacion
+    // Se lee la llave privada que se encuentra en el servidor
+    $llave_priv = file_get_contents("llaves/llave_privada.txt");
+
+    // Convirte el string a una llave para ser usada
+    $llave_priv = openssl_pkey_get_private($llave_priv);
+
+    // Se crea la llave publica a partir de la llave privada
+    $pubKey = openssl_pkey_get_details($llave_priv);
+
+    // Se extrae la llave publica unicamente
+    $pubKey = $pubKey["key"];
+
+    // Encripta en mensaje
+    openssl_public_encrypt($duda, $duda_encript, $pubKey);
+    $duda_encript = base64_encode($duda_encript);
+
+
     
-    // Se crea un token como clave para cifrar y descifrar
-    $clave = bin2hex(random_bytes(64));
-
-    
-    $method = 'aes-256-cbc';
-
-    // Vector de Inicialización  ___ Se genera una diferente con $getIV()
-
-    $getIV = function () use ($method) {
-        return base64_encode(openssl_random_pseudo_bytes(openssl_cipher_iv_length($method)));
-    };
-
-    $iv = $getIV($method); //Este IV se alamacena en la bd
-
-    include("aes.php");
-
-    $info_encriptado =  $encriptar($duda);
-    
-
-
-
-    $insert = "INSERT INTO mensajes (cliente, tel, email, mensaje) VALUES ('$cliente', '$tel', '$email','$info_encriptado')";
+    $insert = "INSERT INTO mensajes (cliente, tel, email, mensaje) VALUES ('$usuario', '$tel', '$email','$duda_encript')";
 
     $datos_insert = mysqli_query($enlace, $insert);
     
-    $id_mensaje = 0;
+  
 
     if($datos_insert){
-
-        $consulta_id = "SELECT LAST_INSERT_ID()";
-        $id_consult = mysqli_query($enlace, $consulta_id);
-
-        foreach ($id_consult as $key){
-            $id_mensaje = $key['LAST_INSERT_ID()'];
-        }
-        $insert_claves = "INSERT INTO claves_aes (id_mensaje, iv, clave) VALUES ($id_mensaje, '$iv', '$clave')";
-        $clave_insert = mysqli_query($enlace, $insert_claves);
-
-        if($clave_insert){
-            header("Location:../views/contacto.php");
-        }
+        
+        header("Location:../views/contacto.php?enviado=true");
+        
     }
 
 }

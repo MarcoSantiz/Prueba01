@@ -6,8 +6,6 @@ error_reporting(0);
 $var_cliente = $_SESSION['usuario'];
 $var_dir     = $_SESSION['dir'];
 $var_tel     = $_SESSION['tel'];
-$var_email   = $_SESSION['email'];
-$var_pass   = $_SESSION['pass'];
 $var_admin = $_SESSION['gerente'];
 
 
@@ -162,40 +160,20 @@ $var_admin = $_SESSION['gerente'];
                             echo "<input type=\"text\" name=\"tel\" class=\"form-control\" placeholder=\"10 digitos\" required>";
 
                          }
-
                         ?>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Correo electronico</label>
-                        <?php
-                         if($var_email != null | $var_email != ''){
-                            echo "<input type=\"email\" name=\"email\" class=\"form-control\" placeholder=\"ejemplo@gmail.com\"  value=\"$var_email\" required>";
-                         }else{
-                            echo "<input type=\"email\" name=\"email\" class=\"form-control\" placeholder=\"ejemplo@gmail.com\" required>";
-                            
-                         }
-
-                        ?>
+                        <label>Correo electronico</label>   
+                        <input type="email" name="email" class="form-control" placeholder="ejemplo@gmail.com" required>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <label>Contraseña de acceso</label>
                     <div class="input-group"> 
-                        
-                        <?php
-                        
-                        if($var_pass != null | $var_pass != ''){
-                            echo "<input type=\"password\" name=\"pass\" class=\"form-control\" id=\"input_pass\" value=\"$var_pass\">";
-                        }else{
-                            echo "<input type=\"password\" name=\"pass\" class=\"form-control\" id=\"input_pass\">";
-                            
-                        }
-                        ?>
+                        <input type="password" name="pass" class="form-control" id="input_pass">
                         <button class="btn btn-outline-secondary" type="button" id="btn_show" onclick=" show_pass()" >Ver</button>
-
-                        
                     </div>
 
                 </div>
@@ -237,29 +215,7 @@ $var_admin = $_SESSION['gerente'];
                 </div>
                 
             </div>
-            <br><br>
-            <div class="row">
-
-                    <?php
-
-                    if($var_cliente != null | $var_cliente != ''){
-
-                        echo "
-                        <h6 class=\"text-center\">Pegue su clave privada para descifrar sus datos</h6>
-                        <div class=\"col-md-2\">
-                        <textarea type=\"text\" class=\"from-control\" id=\"llave_priv\" onchange=\"read_llave(this)\"></textarea>
-                        </div>
-                        <div class=\"col-md-2 offset-md-2\">
-                        <button class=\"btn btn-primary\" type=\"button\" id=\"btn_descifrar\" data-cliente=\"".$var_cliente."\" onclick=\" descifrar()\" >Ver</button>                
-                        </div>";
-                    }
-                    ?>
-                
-                    
-                
-            </div>
-            <br><br>
-            <h6 class="text-start text-danger">Guarde su clave privada para ver sus datos bancarios</h6>
+            <br>
             <br>
             <!-- Boton de hacer reservación -->
             <div class="row">

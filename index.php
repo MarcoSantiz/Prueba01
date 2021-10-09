@@ -56,6 +56,7 @@ $var_admin = $_SESSION['gerente'];
         <div class="img_banner2">
         </div>
         <input type="button" value="Login" class="btn btn-primary btn-lg login" id="btn_login" onclick="show_login()">
+        <input type="button" value="Registrarse" class="btn btn-primary btn-lg registrarse" id="btn_registrarse" onclick="show_registrar()">
 
     </div>
     

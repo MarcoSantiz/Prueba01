@@ -40,3 +40,11 @@
     margin-top: -250px;
     margin-left: 80%;
 }
+
+.registrarse {
+    position: absolute;
+    float: right;
+    z-index: 99;
+    margin-top: -170px;
+    margin-left: 78.5%;
+}
