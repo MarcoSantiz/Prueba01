@@ -77,6 +77,7 @@ $var_admin = $_SESSION['gerente'];
                         <li><a class="text-white" href="#">Política de privacidad</a></li>
                         <li><a class="text-white" href="#">Aviso legal</a></li>
                         <li><a class="text-white" href="#">Términos y condiciones</a></li>
+                        <li><a class="text-white" href="#">Lopez Marco Antoniogit</a></li>
                     </ul>
 
                 </div>
