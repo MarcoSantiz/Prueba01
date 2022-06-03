@@ -78,7 +78,12 @@ $var_admin = $_SESSION['gerente'];
                         <li><a class="text-white" href="#">Aviso legal</a></li>
                         <li><a class="text-white" href="#">Términos y condiciones</a></li>
                         <li><a class="text-white" href="#">Lopez Marco Antoniogit</a></li>
+<<<<<<< HEAD
                         <li><a class="text-white" href="#">soy marco antonio</a></li>
+=======
+                        
+                        <li><a class="text-white" href="#">hola mundo</a></li>
+>>>>>>> 037602081bff29170afc9eef0573ab4e5498d06a
                     </ul>
 
                 </div>
